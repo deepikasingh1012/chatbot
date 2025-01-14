@@ -1,0 +1,39 @@
+/* Style for the badge container */
+.badge-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    flex-wrap: wrap;  /* Allow badges to wrap to the next line if there isn't enough space */
+    gap: 15px; /* Space between badges */
+  }
+  
+  /* Increase badge size */
+  .badge {
+    font-size: 18px;  /* Increase font size */
+    padding: 12px 20px;  /* Increase padding */
+    border-radius: 50px;  /* Round corners for a pill shape */
+    display: inline-block;
+    min-width: 150px; /* Minimum width to prevent badge collapse */
+    text-align: center; /* Center text inside badges */
+  }
+  
+  /* Add responsive behavior for smaller screens */
+  @media (max-width: 768px) {
+    .badge {
+      font-size: 16px;  /* Adjust font size for smaller screens */
+      padding: 10px 15px;  /* Adjust padding for smaller screens */
+      min-width: 120px; /* Adjust min width for smaller screens */
+    }
+  }
+  
+  /* Adjust table badges for action and status */
+  .table .badge {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+  
+  /* Add some spacing for the table badges */
+  .table td .badge {
+    margin-right: 8px;
+  }
