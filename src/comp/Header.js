@@ -5,7 +5,7 @@ export default function Header() {
     <div style={styles.header}>
       <h2 style={styles.title}>Welcome To Admin Dashboard</h2>
       <div style={styles.profile}>
-        <img src="/styles/logo.jpg" alt="User" style={styles.profileImage} />
+        <img src="/styles/ATai ChatBot.png" alt="User" style={styles.profileImage} />
         <div style={styles.dropdownIcon}>
           <i className="fas fa-chevron-down" style={styles.icon}></i>
         </div>
@@ -17,14 +17,14 @@ export default function Header() {
 const styles = {
   header: {
     padding: "20px 30px",
-    background: "linear-gradient(90deg, #5A67D8 0%, #4C51BF 100%)",
+    background: "linear-gradient(90deg,rgb(27, 27, 29) 0%,rgb(82, 82, 87) 100%)",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
     color: "#fff",
-    borderTopLeftRadius: "15px",
-    borderTopRightRadius: "15px",
+    borderTopLeftRadius: "2px",
+    borderTopRightRadius: "2px",
   },
   title: {
     fontSize: "24px",

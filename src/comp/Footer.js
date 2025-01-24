@@ -19,7 +19,7 @@ const styles = {
     padding: "10px",
     backgroundColor: "#fff",
     textAlign: "center",
-    boxShadow: "0 -2px 4px rgba(0, 0, 0, 0.1)",
+    boxShadow: "linear-gradient(90deg,rgb(27, 27, 29) 0%,rgb(82, 82, 87) 100%)",
   },
   button: {
     padding: "5px 10px",
