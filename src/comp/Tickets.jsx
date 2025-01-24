@@ -204,7 +204,7 @@ export default function Tickets() {
                     <td>
                       <button
                         className={`btn btn-${
-                          ticket.action === "pending"
+                          ticket.action === "Closed"
                             ? "success"
                             : ticket.action === "Answered"
                             ? "primary"
