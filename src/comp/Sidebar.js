@@ -37,7 +37,7 @@ const styles = {
   sidebar: {
     width: "250px",
     height: "150vh",
-    background: "linear-gradient(90deg,rgb(27, 27, 29) 0%,rgb(82, 82, 87) 100%)",
+    background: "linear-gradient(90deg,rgb(25, 146, 35) 0%,rgb(26, 125, 17) 100%)",
     color: "white",
     display: "flex",
     flexDirection: "column",

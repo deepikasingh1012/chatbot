@@ -1,10 +1,16 @@
 import axios from 'axios';
 
-// Define the base URL for your backend
-const BASE_URL = "http://localhost:5000";
+const apiBaseURL = 'https://atchatbot.pythonanywhere.com';
+
+const axiosConfig = {
+    headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*', // Allow all origins (development only)
+    },
+};
 
 // Function to start the chatbot
-export const getUserConversation = async (chatbotId) => {
+export const UserConversation = async (chatbotId) => {
     let data = JSON.stringify({
         "user_id": "#Usr123"
       });
@@ -13,10 +19,7 @@ export const getUserConversation = async (chatbotId) => {
         method: 'get',
         maxBodyLength: Infinity,
         url: 'http://127.0.0.1:5000/get_user_conversation?user_id=%23Usr123',
-        headers: { 
-          'Content-Type': 'application/json', 
-         
-        },
+       
         data : data
       };
   try {

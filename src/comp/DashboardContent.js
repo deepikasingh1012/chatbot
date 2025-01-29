@@ -229,6 +229,76 @@ export default function FAQDashboard() {
       question: "AI-Based Custom Solution",
       answers: ["When do you wish to start?", "Immediately", "Within 1 month"],
     },
+    {
+      id: 4,
+      question: "Mobile App Development",
+      answers: ["Do you have an existing app?", "Yes", "No"],
+    },
+    {
+      id: 5,
+      question: "Social Media Marketing",
+      answers: [
+        "What platform are you interested in?",
+        "Facebook",
+        "Instagram",
+        "LinkedIn",
+      ],
+    },
+    {
+      id: 6,
+      question: "Cyber Security Service",
+      answers: ["Do you need consultation?", "Yes", "No"],
+    },
+    {
+      id: 7,
+      question: "ECommerce Solutions",
+      answers: [
+        "What type of ECommerce platform?",
+        "Shopify",
+        "WooCommerce",
+        "Magento",
+      ],
+    },
+    {
+      id: 8,
+      question: "Documents Automation",
+      answers: [
+        "What type of document do you want to automate?",
+        "Legal Documents",
+        "Financial Reports",
+        "Contracts",
+      ],
+    },
+    {
+      id: 9,
+      question: "Do you need Cybersecurity assessment?",
+      answers: ["Yes", "No"],
+    },
+    {
+      id: 10,
+      question: "When do you wish to start?",
+      answers: ["Immediately", "Within 1 month"],
+    },
+    {
+      id: 11,
+      question: "How can we assist you with your website development?",
+      answers: ["Custom Website", "Template-Based Website", "ECommerce Website"],
+    },
+    {
+      id: 12,
+      question: "Would you like to book a demo for our AI-based solution?",
+      answers: ["Yes, Book a Demo", "No, Just Information"],
+    },
+    {
+      id: 13,
+      question: "What is the preferred timeline for your mobile app development?",
+      answers: ["Within 3 months", "6 months", "1 year"],
+    },
+    {
+      id: 14,
+      question: "Would you like to integrate social media campaigns into your business?",
+      answers: ["Yes", "No", "Maybe Later"],
+    },
   ]);
 
   const [currentFaq, setCurrentFaq] = useState({ question: "", answers: [] });
@@ -370,3 +440,7 @@ export default function FAQDashboard() {
     </div>
   );
 }
+
+
+
+

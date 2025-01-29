@@ -4,10 +4,10 @@ import React from 'react'
 export default function Footer() {
   return (
     <div style={styles.footer}>
-      <p>
+      {/* <p>
         This website uses cookies to improve your web experience.{" "}
         <button style={styles.button}>Accept</button>
-      </p>
+      </p> */}
     </div>
   )
 }
