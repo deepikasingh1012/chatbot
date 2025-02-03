@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { getCallbackRequests, updateTicketTitle } from "./Services"; // Import the services
 
 export default function CallbackRequestsTable() {
   const [tickets, setTickets] = useState([]); // Store an array of tickets
@@ -8,40 +8,13 @@ export default function CallbackRequestsTable() {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);  // Store the success message after update
 
-  const scrollContainerRef = useRef(null);
-  const isDragging = useRef(false);
-  const startPos = useRef(0);
-
-  // Handle drag-to-scroll functionality
-  const handleMouseDown = (e) => {
-    isDragging.current = true;
-    startPos.current = e.clientY;
-  };
-
-  const handleMouseMove = (e) => {
-    if (isDragging.current && scrollContainerRef.current) {
-      const deltaY = startPos.current - e.clientY;
-      scrollContainerRef.current.scrollTop += deltaY;
-      startPos.current = e.clientY;
-    }
-  };
-
-  const handleMouseUpOrLeave = () => {
-    isDragging.current = false;
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        // Fetch all tickets
-        const response = await axios.post("http://127.0.0.1:5000/callback_request_resolution_status");
-
-        if (response.data && Array.isArray(response.data.callback_requests)) {
-          setTickets(response.data.callback_requests); // Set ticket data
-        } else {
-          setError("No callback request data found.");
-        }
+        // Fetch all callback requests using the service
+        const callbackRequests = await getCallbackRequests();
+        setTickets(callbackRequests);
       } catch (err) {
         setError("Failed to load callback requests.");
       } finally {
@@ -52,33 +25,23 @@ export default function CallbackRequestsTable() {
     fetchData();
   }, []);
 
-  // Handle the update of callback request resolution status
-  const updateResolutionStatus = async (ticket_id, currentStatus) => {
-    try {
-      const updatedStatus = !currentStatus; // Toggle the current status
-      const response = await axios.get("http://127.0.0.1:5000/callback_request_resolution_status", {
-        ticket_id,
-        callback_request_resolution_status: updatedStatus
-      });
-
-      if (response.data.callback_request_resolution_status === updatedStatus) {
-        setMessage(`Callback request resolution status for ${ticket_id} updated successfully!`);
-        
-        // Update ticket state with the new status
-        setTickets((prevTickets) =>
-          prevTickets.map((ticket) =>
-            ticket.ticket_id === ticket_id
-              ? { ...ticket, callback_request_resolution_status: updatedStatus }
-              : ticket
-          )
-        );
-      } else {
-        setMessage("Error updating the resolution status.");
-      }
-    } catch (error) {
-      setMessage("Failed to update the resolution status.");
-    }
-  };
+  // Function to handle title updates
+  // const handleTitleUpdate = async (ticket_id, newTitle) => {
+  //   try {
+  //     const response = await updateTicketTitle(ticket_id, newTitle);
+  //     setMessage(response.message); // Show success message after title update
+  //     // Optionally, update the ticket list with new title
+  //     setTickets((prevTickets) =>
+  //       prevTickets.map((ticket) =>
+  //         ticket.ticket_id === ticket_id
+  //           ? { ...ticket, ticket_title: newTitle }  // Update the title in the UI
+  //           : ticket
+  //       )
+  //     );
+  //   } catch (error) {
+  //     setMessage("Failed to update the ticket title.");
+  //   }
+  // };
 
   // If loading, show loading message
   if (loading) return <div>Loading...</div>;
@@ -95,69 +58,57 @@ export default function CallbackRequestsTable() {
 
       <div className="bg-white p-4 rounded shadow mb-4">
         <h4 className="mb-4">Callback Requests</h4>
-        <div
-          ref={scrollContainerRef}
-          style={{
-            maxHeight: "300px",
-            overflowY: "auto",
-            cursor: isDragging.current ? "grabbing" : "grab",
-            transition: "all 0.3s ease-in-out",
-            borderRadius: "8px",
-            padding: "10px",
-          }}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUpOrLeave}
-          onMouseLeave={handleMouseUpOrLeave}
-        >
-          <table className="table table-bordered table-striped">
-            <thead className="bg-light">
-              <tr>
-                <th>Ticket ID</th>
-                <th>User Name</th>
-                <th>Status</th>
-                <th>Created At</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tickets.length > 0 ? (
-                tickets.map((ticket) => (
-                  <tr key={ticket.ticket_id}>
-                    <td>
-                      <Link to={`/user_conversation/${ticket.ticket_id}`} className="text-decoration-none text-primary">
-                        {ticket.ticket_id}
-                      </Link>
-                    </td>
-                    <td>{ticket.user_name}</td>
-                    <td>
-                      <span
-                        className={`badge bg-${ticket.callback_request_resolution_status ? "success" : "warning"}`}
-                      >
-                        {ticket.callback_request_resolution_status ? "Resolved" : "Pending"}
-                      </span>
-                    </td>
-                    <td>{new Date(ticket.created_at).toLocaleString()}</td>
-                    <td>
-                      <button
-                        className="btn btn-primary btn-sm"
-                        onClick={() =>
-                          updateResolutionStatus(ticket.ticket_id, ticket.callback_request_resolution_status)
-                        }
-                      >
-                        {ticket.callback_request_resolution_status ? "Mark as Pending" : "Mark as Resolved"}
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="5">No callback requests available.</td>
+        <table className="table table-bordered table-striped">
+          <thead className="bg-light">
+            <tr>
+              <th>Ticket ID</th>
+              <th>User Name</th>
+              <th>Contact</th>
+              <th>Email</th>
+              <th>User Query</th>
+              {/* <th>Status</th>
+              <th>Created At</th>
+              <th>Action</th> */}
+            </tr>
+          </thead>
+          <tbody>
+            {tickets.length > 0 ? (
+              tickets.map((ticket) => (
+                <tr key={ticket.ticket_id}>
+                  <td>
+                    <Link to={`/user_conversation/${ticket.ticket_id}`} className="text-decoration-none text-primary">
+                      {ticket.ticket_id}
+                    </Link>
+                  </td>
+                  <td>{ticket.user_name}</td>
+                  <td>{ticket.contact}</td>
+                  <td>{ticket.email}</td>
+                  <td>{ticket.userquery || "No query"}</td>  {/* If userquery is null, show "No query" */}
+                  {/* <td>
+                    <span
+                      className={`badge bg-${ticket.callback_request_resolution_status ? "success" : "warning"}`}
+                    >
+                      {ticket.callback_request_resolution_status ? "Resolved" : "Pending"}
+                    </span>
+                  </td>
+                  <td>{new Date(ticket.created_at).toLocaleString()}</td> {/* Adjust this based on the actual field for created_at */}
+                  {/* <td>
+                    <button
+                      className="btn btn-primary btn-sm"
+                      onClick={() => handleTitleUpdate(ticket.ticket_id, "New Title")}
+                    >
+                      Update Title
+                    </button>
+                  </td>  */}
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="8">No callback requests available.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );

@@ -13,6 +13,9 @@ import AnsweredTicket from "../comp/AnsweredTicket";
 import UnAnsweredTicket from "../comp/UnAnsweredTicket";
 import UserConversation from "../comp/UserConversation";
 import Callbackrequest from "../comp/Callbackrequest";
+import FAQdashboard from "../comp/FAQdashboard";
+
+import Help from "../comp/Help"
 
 export default function Router() {
   return (
@@ -23,6 +26,7 @@ export default function Router() {
         <Route path="/footer" element={<Footer/>}/> */}
         <Route path="/sidebar" element={<Sidebar/>}/>
         <Route path="/visitor" element={<Visitor />} />
+        <Route path="/FAQdashboard" element={<FAQdashboard />} />
           <Route path="/dashboardcontent" element={<DashboardContent />} />
           <Route path="/Tickets" element={<Tickets />} />
           <Route path="/TotalTicket" element={<TotalTicket/>}/>
@@ -32,7 +36,8 @@ export default function Router() {
           <Route path="/ClosedTicket" element={<ClosedTicket/>}/>
           <Route path="/RatedTicket" element={<RatedTicket/>}/>
           <Route path="/Callbackrequest" element={<Callbackrequest/>}/>
-          <Route path="/user_conversation/:ticket_id" element={<UserConversation />} />
+          <Route path="/user_conversation?user_id" element={<UserConversation/>} />
+          <Route path="/Help" element={<Help/>}/>
         </Route>
 
         

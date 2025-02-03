@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Sidebar() {
   const links = [
-    { name: "Chatbot", url: "/DashboardContent" },
+    { name: "Chatbot", url: "/FAQdashboard" },
     { name: "Tickets", url: "/Tickets" },
     { name: "Callback Request", url: "/Callbackrequest" },
     { name: "Help", url: "/help" },
